@@ -42,6 +42,12 @@ public class ImageManager{
             return imageLoader.PATH_VT2;
         }else if(path=="VT3"){
             return imageLoader.PATH_VT3;
+        }else if(path=="GR1"){
+            return imageLoader.GRASS1;
+        }else if(path=="DD1_P1"){
+            return imageLoader.DOODAD_STONE1_PART1;
+        }else if(path=="DD1_P2"){
+            return imageLoader.DOODAD_STONE1_PART2;
         }
         System.out.println("No matched image");
         return null;

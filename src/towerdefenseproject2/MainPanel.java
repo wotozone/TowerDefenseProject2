@@ -44,6 +44,8 @@ public class MainPanel extends JFrame implements Runnable{
     private int dropDelay;
     
     private boolean start = false, end = false;
+    
+    private boolean test = false;
 
 
   public MainPanel() {
@@ -63,7 +65,12 @@ public class MainPanel extends JFrame implements Runnable{
     end=false;
     
     
+    //for testing
+    test=true;
+    
+    
     fps = new FPSChecker();
+    initTile();
     try {
         imageManager = new ImageManager();
         map = new BasicMap();
@@ -72,6 +79,14 @@ public class MainPanel extends JFrame implements Runnable{
     }
  }
 
+    private void initTile(){
+        for(int i=0;i<TILE_MAX_X_NUM;i++){
+            for(int k=0;k<TILE_MAX_Y_NUM;k++){
+                PathController.path[i][k] = new PathController();
+            }
+        }
+    }
+    
  public void run() {
 
     try {
@@ -112,9 +127,11 @@ public class MainPanel extends JFrame implements Runnable{
         gs.fillRect(0, 50, 1280, 680);
         for(int i=0;i<32;i++){
             for(int k=0;k<17;k++){
-                gs.setColor(Color.cyan);
-                gs.drawRect(size*i,10+size*(1+k),size-1,size-1);
-                gs.drawImage(PathController.path[i][k].getTileImage(), size*i, size*k, this);
+                gs.drawImage(PathController.path[i][k].getTileImage(), size*(i), 10+size*(k+1), this);
+                if(test){
+                    gs.setColor(Color.cyan);
+                    gs.drawRect(size*i,10+size*(1+k),size-1,size-1);
+                }
             }
         }
         

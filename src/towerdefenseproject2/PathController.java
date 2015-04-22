@@ -25,9 +25,18 @@ public class PathController {
         2 - doodad
         3
         ...
-        9 - pathway where enemy moves
+        10 - pathway
+        11~14 - pathway where enemy moves
     */
     
+    private int pathDir=0;
+    /*
+        Direction(clockwise)
+        1 - Up
+        2 - Right
+        3 - Down
+        4 - Left
+    */
     
     
         public static PathController[][] path = new PathController[32][17];
@@ -40,8 +49,14 @@ public class PathController {
                 pathStatus=1;
             case 2:
                 pathStatus=2;
-            case 9:
-                setTilePathway();
+            case 11:
+                setTilePathway(1);
+            case 12:
+                setTilePathway(2);
+            case 13:
+                setTilePathway(3);
+            case 14:
+                setTilePathway(4);
         }
     }
     
@@ -49,11 +64,13 @@ public class PathController {
         pathStatus=0;
     }
     
-    public void setTilePathway(){
-        pathStatus=9;
+    public void setTilePathway(int dir){
+        pathStatus=10;
+        pathDir=dir;
     }
     
     public void setTileImage(BufferedImage bi){
+            System.out.println("sfd");
         pathImage=bi;
     }
     

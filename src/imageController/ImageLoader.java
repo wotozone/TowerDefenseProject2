@@ -34,6 +34,11 @@ public class ImageLoader{
     public final BufferedImage PATH_VT2;
     public final BufferedImage PATH_VT3;
     
+    //DOODAD&GRASS
+    public final BufferedImage GRASS1;
+    public final BufferedImage DOODAD_STONE1_PART1;
+    public final BufferedImage DOODAD_STONE1_PART2;
+    
     
     public ImageLoader() throws Exception{
         //FRAMES
@@ -51,6 +56,11 @@ public class ImageLoader{
         PATH_VT1= ImageIO.read(new FileInputStream("Resources/Path_Vertical1.png"));
         PATH_VT2= ImageIO.read(new FileInputStream("Resources/Path_Vertical2.png"));
         PATH_VT3= ImageIO.read(new FileInputStream("Resources/Path_Vertical3.png"));
+        
+        //DOODAD & GRASS
+        GRASS1= ImageIO.read(new FileInputStream("Resources/Grass1.png"));
+        DOODAD_STONE1_PART1= ImageIO.read(new FileInputStream("Resources/Doodad_Stone1_Part1.png"));
+        DOODAD_STONE1_PART2= ImageIO.read(new FileInputStream("Resources/Doodad_Stone1_Part2.png"));
         
         //UNITS
         
