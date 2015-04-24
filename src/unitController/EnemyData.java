@@ -14,11 +14,34 @@ package unitController;
 
 public class EnemyData {
     
-    protected int maxHp=0;// Maximum hp of an object; it must has to be declared first.
-    protected int shieldHp=0;//special hp
-    protected int currentHp=0;// hp that object currently have
-    protected int unitType=0; // 0=ground, 1=air
-    protected int unitGold=0;
+    private int maxHp=0;// Maximum hp of an object; it must has to be declared first.
+    private int shieldHp=0;//special hp
+    private int currentHp=0;// hp that object currently have
+    private int unitType=0; // 0=ground, 1=air
+    private int unitGold=0;
+    
+    private String enemyName=null;
+    private int enemySpeed=0;
+    
+    public static EnemyData[] enemy = new EnemyData[EnemyController.MAX_ENEMY];
+    
+    public void initEnemy(int hp, int maxhp, int shieldhp, int type, int gold){//when an enemy has shield
+        initializer(hp,maxhp,shieldhp,type,gold);
+    }
+    public void initEnemy(int hp, int maxhp, int type, int gold){// when hp and maxhp are different
+        initializer(hp,maxhp,0,type,gold);
+    }
+    public void initEnemy(int hp, int type, int gold){//when hp = maxhp
+        initializer(hp,hp,0,type,gold);
+    }
+    
+    private void initializer(int hp, int maxhp, int shieldhp, int type, int gold){
+        initHp(maxhp);
+        setHp(hp);
+        if(shieldhp>0)healHp(true,shieldhp);
+        setType(type);
+        setReward(gold);
+    }
     
     public void setHp(int value){//use to init. object's max. hp
         if(value==0){
@@ -71,12 +94,8 @@ public class EnemyData {
         }
     }
     
-    public void setType(boolean ground){//set type of unit
-        if(ground==true){
-            unitType=0;
-        }else{
-            unitType=1;
-        }
+    public void setType(int type){//set type of unit
+        unitType=type;
     }
     
     public void setReward(int value){//set its reward gold
@@ -89,6 +108,13 @@ public class EnemyData {
         return dead;
     }
     
+    public void clearData(){
+    maxHp=0;
+    shieldHp=0;
+    currentHp=0;
+    unitType=0;
+    unitGold=0;
+    }
     
     //-----------------------------------------------------------------------------//
     // methods for getting information

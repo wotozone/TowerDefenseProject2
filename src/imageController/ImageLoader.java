@@ -22,6 +22,9 @@ public class ImageLoader{
     //INTERFACES
     //public final BufferedImage GAME_OVER;
     
+    //UNITS
+    public final BufferedImage ENEMY_DUMMY;
+    
     //PATH
     public final BufferedImage PATH_LU;
     public final BufferedImage PATH_LD;
@@ -63,6 +66,7 @@ public class ImageLoader{
         DOODAD_STONE1_PART2= ImageIO.read(new FileInputStream("Resources/Doodad_Stone1_Part2.png"));
         
         //UNITS
+        ENEMY_DUMMY= ImageIO.read(new FileInputStream("Resources/DummyEnemy.png"));
         
         //INTERFACES
         

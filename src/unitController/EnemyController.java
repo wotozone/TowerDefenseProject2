@@ -11,4 +11,16 @@ package unitController;
  */
 public class EnemyController {
     
+    public static final int MAX_ENEMY=300;
+    
+    public EnemyController(){
+        initEnemyData();
+    }
+    
+    private void initEnemyData(){
+        for(int i=0;i<MAX_ENEMY;i++){
+            EnemyData.enemy[i] = new EnemyData();
+        }
+    }
+    
 }
