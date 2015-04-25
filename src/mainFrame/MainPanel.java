@@ -11,6 +11,8 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.JFrame;
 import mapInfo.*;
 import unitController.EnemyData;
@@ -50,39 +52,59 @@ public class MainPanel extends JFrame implements Runnable{
     
     private boolean start = false, end = false;
     
+    private Timer timer;
+    
     public static final boolean TEST = true;//for testing
 
 
-  public MainPanel() {
+    public MainPanel() {
   
-    bi = new BufferedImage(WINDOW_WIDTH, WINDOW_HEIGHT, BufferedImage.TYPE_INT_RGB);
+        bi = new BufferedImage(WINDOW_WIDTH, WINDOW_HEIGHT, BufferedImage.TYPE_INT_RGB);
 
-    //this.addKeyListener(this);
-    this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT); 
-    this.setTitle("121321");
-    this.setResizable(false);  
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setVisible(true);  
-    this.setLocationRelativeTo(null);
-    this.addKeyListener(new KeyHandler());
-    
-    start=true;
-    end=false;
-    
-    
-    
-    
-    fps = new FPSChecker();
-    initTile();
-    try {
-        imageManager = new ImageManager();
-        //map = MapManager.map.getMapType(mapType);
-        MapManager.map.setMapType(mapType);
-    } catch (Exception ex) {
-        ex.printStackTrace();
+        //this.addKeyListener(this);
+        this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT); 
+        this.setTitle("121321");
+        this.setResizable(false);  
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);  
+        this.setLocationRelativeTo(null);
+        this.addKeyListener(new KeyHandler());
+
+        start=true;
+        end=false;
+
+
+
+
+        fps = new FPSChecker();
+        initTile();
+        try {
+            imageManager = new ImageManager();
+            //map = MapManager.map.getMapType(mapType);
+            MapManager.map.setMapType(mapType);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
- }
-
+    private void initTimer(){
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask(){
+            @Override
+            public void run(){
+                /*
+                for(int i=0;i<StartScreen.BLOCK_NUM_HEIGHT;i++){
+                    for(int k=0;k<StartScreen.BLOCK_NUM_WIDTH;k++){
+                        blocks[k][i].setBlockColor(test);
+                    }
+                }
+                if(test>7)test=0;
+                test++;
+                */
+                repaint();
+            }
+        }, 0, 1000);
+    }
+    
     private void initTile(){
         for(int i=0;i<TILE_MAX_X_NUM;i++){
             for(int k=0;k<TILE_MAX_Y_NUM;k++){
