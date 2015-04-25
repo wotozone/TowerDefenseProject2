@@ -19,28 +19,29 @@ public class EnemyData {
     private int currentHp=0;// hp that object currently have
     private int unitType=0; // 0=ground, 1=air
     private int unitGold=0;
+    private int unitSpeed=0;
     
     private String enemyName=null;
-    private int enemySpeed=0;
     
     public static EnemyData[] enemy = new EnemyData[EnemyController.MAX_ENEMY];
     
-    public void initEnemy(int hp, int maxhp, int shieldhp, int type, int gold){//when an enemy has shield
-        initializer(hp,maxhp,shieldhp,type,gold);
+    public void initEnemy(int hp, int maxhp, int shieldhp, int type, int gold, int speed){//when an enemy has shield
+        initializer(hp,maxhp,shieldhp,type,gold,speed);
     }
-    public void initEnemy(int hp, int maxhp, int type, int gold){// when hp and maxhp are different
-        initializer(hp,maxhp,0,type,gold);
+    public void initEnemy(int hp, int maxhp, int type, int gold, int speed){// when hp and maxhp are different
+        initializer(hp,maxhp,0,type,gold,speed);
     }
-    public void initEnemy(int hp, int type, int gold){//when hp = maxhp
-        initializer(hp,hp,0,type,gold);
+    public void initEnemy(int hp, int type, int gold, int speed){//when hp = maxhp
+        initializer(hp,hp,0,type,gold,speed);
     }
     
-    private void initializer(int hp, int maxhp, int shieldhp, int type, int gold){
+    private void initializer(int hp, int maxhp, int shieldhp, int type, int gold, int speed){
         initHp(maxhp);
         setHp(hp);
         if(shieldhp>0)healHp(true,shieldhp);
         setType(type);
         setReward(gold);
+        setSpeed(speed);
     }
     
     public void setHp(int value){//use to init. object's max. hp
@@ -98,6 +99,10 @@ public class EnemyData {
         unitType=type;
     }
     
+    public void setSpeed(int speed){
+        unitSpeed=speed;
+    }
+    
     public void setReward(int value){//set its reward gold
         unitGold=value;
     }
@@ -114,6 +119,7 @@ public class EnemyData {
     currentHp=0;
     unitType=0;
     unitGold=0;
+    unitSpeed=0;
     }
     
     //-----------------------------------------------------------------------------//
@@ -140,5 +146,8 @@ public class EnemyData {
         return unitType;
     }
     
+    public int getUnitSpeed(){
+        return unitSpeed;
+    }
     
 }
