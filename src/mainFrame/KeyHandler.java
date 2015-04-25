@@ -1,4 +1,4 @@
-package towerdefenseproject2;
+package mainFrame;
 
 
 import java.awt.event.KeyEvent;
@@ -25,6 +25,7 @@ public class KeyHandler implements KeyListener {
             case 27: // Esc
                 break;
             case 32: // Spacebar
+                
                 break;
             case 122: // F11 (Fullscreen) //TODO fix this maybe
             case 127: // Delete

@@ -11,7 +11,7 @@ package unitController;
  */
 public class EnemyController {
     
-    public static final int MAX_ENEMY=300;
+    //public static final int MAX_ENEMY=300;
     
     public EnemyInfo info = new EnemyInfo();
     
@@ -21,25 +21,17 @@ public class EnemyController {
     public int enemyAmount = 0;//How many enemy will be loaded
     
     public EnemyController(){
-        initEnemyData();
-    }
-    
-    private void initEnemyData(){
-        for(int i=0;i<MAX_ENEMY;i++){
-            EnemyData.enemy[i] = new EnemyData();
-        }
     }
     
     private void getNextLevelEnemy(){
         enemyLevel++;
-        enemyData= info.GetEnemyData(enemyLevel);
-        
+        enemyData= info.getEnemyData(enemyLevel);
+        summonEnemyInField();
     }
     
-    private void loadEnemyInField(){
-        if(enemyAmount>MAX_ENEMY)enemyAmount=MAX_ENEMY;
+    private void summonEnemyInField(){
         for(int i=0;i<enemyAmount;i++){
-            EnemyData.enemy[i]=enemyData;
+            EnemyData.enemy.add(enemyData);
         }
     }
     

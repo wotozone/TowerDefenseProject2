@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package towerdefenseproject2;
+package mainFrame;
 
 import java.awt.image.BufferedImage;
 
@@ -37,9 +37,10 @@ public class PathController {
         3 - Down
         4 - Left
     */
+    private int positionX=0;
+    private int positionY=0;
     
-    
-        public static PathController[][] path = new PathController[32][17];
+    public static PathController[][] path = new PathController[32][17];
     
     public void setTileType(int type){
         switch(type){
@@ -60,6 +61,11 @@ public class PathController {
         }
     }
     
+    public void setTilePosition(int x, int y){
+        positionX=x;
+        positionY=y;
+    }
+    
     public void setTileEmpty(){
         pathStatus=0;
     }
@@ -76,6 +82,14 @@ public class PathController {
     
     public BufferedImage getTileImage(){
         return pathImage;
+    }
+    
+    public int getPositionX(){
+        return positionX;
+    }
+    
+    public int getPositionY(){
+        return positionY;
     }
     
 }

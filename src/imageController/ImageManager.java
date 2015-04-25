@@ -6,6 +6,7 @@
 package imageController;
 
 import java.awt.image.BufferedImage;
+import mainFrame.MainPanel;
 
 /**
  *
@@ -21,7 +22,6 @@ public class ImageManager{
     
     public BufferedImage getPathImage(String path){
         if(path=="LU"){
-            System.out.println("sfd");
             return imageLoader.PATH_LU;
         }else if(path=="LD"){
             return imageLoader.PATH_LD;
@@ -36,7 +36,6 @@ public class ImageManager{
         }else if(path=="HZ3"){
             return imageLoader.PATH_HZ3;
         }else if(path=="VT1"){
-            System.out.println("1111");
             return imageLoader.PATH_VT1;
         }else if(path=="VT2"){
             return imageLoader.PATH_VT2;
@@ -44,6 +43,9 @@ public class ImageManager{
             return imageLoader.PATH_VT3;
         }else if(path=="GR1"){
             return imageLoader.GRASS1;
+        
+        
+        //DOODAD
         }else if(path=="DD1_P1"){
             return imageLoader.DOODAD_STONE1_PART1;
         }else if(path=="DD1_P2"){
@@ -53,6 +55,22 @@ public class ImageManager{
         return null;
     }
     
+    public BufferedImage getUnitImage(String unit){
+        if(unit=="ENEMY_DUMMY"){
+            return imageLoader.ENEMY_DUMMY;
+        }
+        System.out.println("No matched image");
+        return null;
+    }
+    
+    public BufferedImage getUnitImage(int level){
+        if(level==0){
+            return imageLoader.ENEMY_DUMMY;
+        }
+        if(MainPanel.TEST)return imageLoader.ENEMY_DUMMY;
+        System.out.println("No matched image");
+        return null;
+    }
     /*
     public BufferedImage getBlockColorImage(int value){
         switch(value){

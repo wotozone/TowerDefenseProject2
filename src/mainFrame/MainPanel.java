@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package towerdefenseproject2;
+package mainFrame;
 
 import imageController.ImageManager;
 import java.awt.Color;
@@ -13,6 +13,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import mapInfo.*;
+import unitController.EnemyData;
 
 /**
  *
@@ -22,7 +23,7 @@ public class MainPanel extends JFrame implements Runnable{
  
     public ImageManager imageManager;
     public FPSChecker fps;
-    public BasicMap map;
+    //public Object map;
     
     //size of window
     public static final int WINDOW_WIDTH=1280;
@@ -31,21 +32,25 @@ public class MainPanel extends JFrame implements Runnable{
     //size of tile
     public static final int TILE_WIDTH=40;
     public static final int TILE_HEIGHT=40;
+    public static final int BLOCKSIZE=40;
     
     //# of tiles
     public static final int TILE_MAX_X_NUM=32;
     public static final int TILE_MAX_Y_NUM=17;
     
     private BufferedImage bi = null;
+    private EnemyData ed = null;
 
     private boolean left = false, right = false, down = false;
     
     private int moveDelay;
     private int dropDelay;
     
+    public static int mapType=0;//set as Basic Map initially
+    
     private boolean start = false, end = false;
     
-    private boolean test = false;
+    public static final boolean TEST = true;//for testing
 
 
   public MainPanel() {
@@ -65,15 +70,14 @@ public class MainPanel extends JFrame implements Runnable{
     end=false;
     
     
-    //for testing
-    test=true;
     
     
     fps = new FPSChecker();
     initTile();
     try {
         imageManager = new ImageManager();
-        map = new BasicMap();
+        //map = MapManager.map.getMapType(mapType);
+        MapManager.map.setMapType(mapType);
     } catch (Exception ex) {
         ex.printStackTrace();
     }
@@ -83,6 +87,7 @@ public class MainPanel extends JFrame implements Runnable{
         for(int i=0;i<TILE_MAX_X_NUM;i++){
             for(int k=0;k<TILE_MAX_Y_NUM;k++){
                 PathController.path[i][k] = new PathController();
+                PathController.path[i][k].setTilePosition(BLOCKSIZE*i, 10+BLOCKSIZE*(k+1));
             }
         }
     }
@@ -122,16 +127,23 @@ public class MainPanel extends JFrame implements Runnable{
         //Main gamePanel
         gs.setColor(Color.BLACK);
         gs.fillRect(0, 0, 1280, 960);
-        int size=40;
         gs.setColor(Color.WHITE);
         gs.fillRect(0, 50, 1280, 680);
-        for(int i=0;i<32;i++){
-            for(int k=0;k<17;k++){
-                gs.drawImage(PathController.path[i][k].getTileImage(), size*(i), 10+size*(k+1), this);
-                if(test){
+        for(int i=0;i<TILE_MAX_X_NUM;i++){
+            for(int k=0;k<TILE_MAX_Y_NUM;k++){
+                gs.drawImage(PathController.path[i][k].getTileImage(),
+                             PathController.path[i][k].getPositionX(),
+                             PathController.path[i][k].getPositionY(), this);
+                if(TEST){
                     gs.setColor(Color.cyan);
-                    gs.drawRect(size*i,10+size*(1+k),size-1,size-1);
+                    gs.drawRect(BLOCKSIZE*i,10+BLOCKSIZE*(1+k),BLOCKSIZE-1,BLOCKSIZE-1);
                 }
+            }
+        }
+        if(EnemyData.enemy.size()!=0){
+            for(int i=0;i<EnemyData.enemy.size();i++){
+                ed=EnemyData.enemy.get(i);
+                gs.drawImage(ed.getUnitImage(), ed.getPositionX(), ed.getPositionY(), this);
             }
         }
         

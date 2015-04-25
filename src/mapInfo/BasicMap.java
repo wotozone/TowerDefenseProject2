@@ -7,44 +7,27 @@ package mapInfo;
 
 import imageController.ImageManager;
 import java.awt.image.BufferedImage;
-import towerdefenseproject2.MainPanel;
-import towerdefenseproject2.PathController;
+import mainFrame.MainPanel;
+import mainFrame.PathController;
 
 /**
  *
  * @author Tae
  */
-public class BasicMap {
+public class BasicMap extends MapInfo{
     
-    private ImageManager imageManager;
-    
-    private PathController startPoint;
-    private PathController endPoint;
+    protected int startX = 1;
+    protected int startY = 0;
+    protected int endX = 31;
+    protected int endY = 15;
     
     public BasicMap() throws Exception{
-        imageManager = new ImageManager();
-        initInfo();
+        super.imageManager = new ImageManager();
+        super.initInfo();
     }
     
-    
-    private void initInfo(){
-        startPoint=PathController.path[1][0];
-        endPoint=PathController.path[31][15];
-        mapInfo();
-    }
-    
-    private PathController getStartPoint(){
-        return startPoint;
-    }
-    
-    private void mapInfo(){
-        //Fill grass first
-        
-        for(int i=0;i<MainPanel.TILE_MAX_X_NUM;i++){
-            for(int k=0;k<MainPanel.TILE_MAX_Y_NUM;k++){
-                setTileTexture(i, k, 0, getPathImg("GR1"));
-            }
-        }
+    @Override
+    protected void pathInfo(){
         //Path
         setPath(1,0,getPathImg("VT1"),3);
         setPath(1,1,getPathImg("VT1"),3);
@@ -100,23 +83,6 @@ public class BasicMap {
         setTileTexture(3, 16, 2, getPathImg("DD1_P2"));
         setTileTexture(10, 3, 2, getPathImg("DD1_P1"));
         setTileTexture(10, 4, 2, getPathImg("DD1_P2"));
-        
-        
-    }
-    
-    private BufferedImage getPathImg(String str){
-        return imageManager.getPathImage(str);
-    }
-    
-    private void setPath(int x, int y, BufferedImage bi, int pathDir){
-            System.out.println("sfd");
-        PathController.path[x][y].setTilePathway(pathDir);
-        PathController.path[x][y].setTileImage(bi);
-    }
-    
-    private void setTileTexture(int x,int y, int type, BufferedImage bi){
-        PathController.path[x][y].setTileType(type);
-        PathController.path[x][y].setTileImage(bi);
     }
     
 }

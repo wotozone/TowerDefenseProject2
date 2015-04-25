@@ -5,6 +5,9 @@
  */
 package unitController;
 
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
 /**
  *
  * @author TaeYoun Kim
@@ -14,6 +17,8 @@ package unitController;
 
 public class EnemyData {
     
+    private BufferedImage unitImage=null;
+    
     private int maxHp=0;// Maximum hp of an object; it must has to be declared first.
     private int shieldHp=0;//special hp
     private int currentHp=0;// hp that object currently have
@@ -21,10 +26,34 @@ public class EnemyData {
     private int unitGold=0;
     private int unitSpeed=0;
     
+    private int x;
+    private int y;
+    
     private String enemyName=null;
     
-    public static EnemyData[] enemy = new EnemyData[EnemyController.MAX_ENEMY];
+    //public static EnemyData[] enemy = new EnemyData[EnemyController.MAX_ENEMY];
+    public static ArrayList<EnemyData> enemy = new ArrayList<EnemyData>();
     
+    
+    
+    
+    
+    //METHODS
+    
+    
+    //POSITIONS
+    public void setPosition(int x, int y){
+        this.x=x;
+        this.y=y;
+    }
+    
+    public void movePosition(int x, int y){
+        this.x+=x;
+        this.y+=y;
+    }
+    
+    
+    //STATS
     public void initEnemy(int hp, int maxhp, int shieldhp, int type, int gold, int speed){//when an enemy has shield
         initializer(hp,maxhp,shieldhp,type,gold,speed);
     }
@@ -42,6 +71,10 @@ public class EnemyData {
         setType(type);
         setReward(gold);
         setSpeed(speed);
+    }
+    
+    public void setUnitImage(BufferedImage bi){
+        unitImage=bi;
     }
     
     public void setHp(int value){//use to init. object's max. hp
@@ -107,6 +140,9 @@ public class EnemyData {
         unitGold=value;
     }
     
+    
+    
+    //WHEN UNIT DIES
     public boolean isDead(int dmg){//to check unit is dying or not
         boolean dead=false;
         if(dmg>=(currentHp+shieldHp))dead=true;
@@ -114,12 +150,14 @@ public class EnemyData {
     }
     
     public void clearData(){
-    maxHp=0;
-    shieldHp=0;
-    currentHp=0;
-    unitType=0;
-    unitGold=0;
-    unitSpeed=0;
+        unitImage=null;
+        maxHp=0;
+        shieldHp=0;
+        currentHp=0;
+        unitType=0;
+        unitGold=0;
+        unitSpeed=0;
+        enemyName=null;
     }
     
     //-----------------------------------------------------------------------------//
@@ -148,6 +186,18 @@ public class EnemyData {
     
     public int getUnitSpeed(){
         return unitSpeed;
+    }
+    
+    public BufferedImage getUnitImage(){
+        return unitImage;
+    }
+    
+    public int getPositionX(){
+        return x;
+    }
+    
+    public int getPositionY(){
+        return y;
     }
     
 }

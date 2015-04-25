@@ -5,6 +5,12 @@
  */
 package unitController;
 
+import imageController.ImageManager;
+import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import mapInfo.MapManager;
+
 /**
  *
  * @author minjikim
@@ -12,15 +18,33 @@ package unitController;
 public class EnemyInfo {
     
     public static EnemyInfo info = new EnemyInfo();
+    private ImageManager im;
     
-    public EnemyData output = new EnemyData();
+    public static final int initialAmount = 30;
+    
+    private EnemyData output = new EnemyData();
     
     public EnemyInfo(){
-        
+        initImageManager();
     }
     
-    public EnemyData GetEnemyData(int level){
+    private void initImageManager(){
+        try {
+            im = new ImageManager();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public EnemyData getEnemyData(int level){
         resetOutput();
+        getEnemyStat(level);
+        getEnemyImage(level);
+        getEnemyStartPosition();
+        return output;
+    }
+    
+    private void getEnemyStat(int level){
         switch(level){
             case 1:
                 output.initEnemy(10, 0, 30, 20);//(HP,TYPE,GOLD,SPEED)
@@ -62,11 +86,10 @@ public class EnemyInfo {
                 output.initEnemy(1000, 0, 400, 20);
                 break;
         }
-        return output;
     }
     
     public int getEnemyAmount(int level){
-        int amount=30;
+        int amount=initialAmount;
         switch(level){
             case 9:
                 amount=20;
@@ -75,8 +98,16 @@ public class EnemyInfo {
         return amount;
     }
     
+    private void getEnemyStartPosition(){
+        output.setPosition(MapManager.map.startPath.getPositionX(),MapManager.map.startPath.getPositionY());
+    }
+    
+    private void getEnemyImage(int level){
+        output.setUnitImage(im.getUnitImage(level));
+    }
+    
     private void resetOutput(){
         output.clearData();
     }
-    
+
 }
