@@ -92,4 +92,8 @@ public class PathController {
         return positionY;
     }
     
+    public int getPathDir(){
+        return pathDir;
+    }
+    
 }

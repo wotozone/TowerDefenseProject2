@@ -15,7 +15,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JFrame;
 import mapInfo.*;
+import unitController.EnemyController;
 import unitController.EnemyData;
+import unitController.EnemyMove;
 
 /**
  *
@@ -24,7 +26,9 @@ import unitController.EnemyData;
 public class MainPanel extends JFrame implements Runnable{
  
     public ImageManager imageManager;
+    public EnemyController ec;
     public FPSChecker fps;
+    public EnemyMove em;
     //public Object map;
     
     //size of window
@@ -55,6 +59,9 @@ public class MainPanel extends JFrame implements Runnable{
     private Timer timer;
     
     public static final boolean TEST = true;//for testing
+    
+    
+    public boolean enemytest=true;
 
 
     public MainPanel() {
@@ -75,34 +82,35 @@ public class MainPanel extends JFrame implements Runnable{
 
 
 
-
+        ec = new EnemyController();
         fps = new FPSChecker();
+        em = new EnemyMove();
         initTile();
         try {
             imageManager = new ImageManager();
-            //map = MapManager.map.getMapType(mapType);
-            MapManager.map.setMapType(mapType);
+            MapManager.map.setMapType(0);//0 is default
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        initTimer();
     }
     private void initTimer(){
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
-                /*
-                for(int i=0;i<StartScreen.BLOCK_NUM_HEIGHT;i++){
-                    for(int k=0;k<StartScreen.BLOCK_NUM_WIDTH;k++){
-                        blocks[k][i].setBlockColor(test);
-                    }
+                if(enemytest){
+                    System.out.println("ssdfsdfasdfasdfasdfasfd");
+                    ec.getNextLevelEnemy();
+                    enemytest=false;
                 }
-                if(test>7)test=0;
-                test++;
-                */
-                repaint();
+                if(!ec.spawnQueue.isEmpty()){
+                    System.out.println(ec.spawnQueue.size());
+                    EnemyData.enemy.add(ec.spawnQueue.get(0));
+                    ec.spawnQueue.remove(0);
+                }
             }
-        }, 0, 1000);
+        }, 0, 500);
     }
     
     private void initTile(){
@@ -162,10 +170,11 @@ public class MainPanel extends JFrame implements Runnable{
                 }
             }
         }
-        if(EnemyData.enemy.size()!=0){
+        if(!EnemyData.enemy.isEmpty()){
             for(int i=0;i<EnemyData.enemy.size();i++){
                 ed=EnemyData.enemy.get(i);
-                gs.drawImage(ed.getUnitImage(), ed.getPositionX(), ed.getPositionY(), this);
+                ed.setPosition(ed.getPositionX(), ed.getPositionY());
+                gs.drawImage(ed.getUnitImage(), ed.getPositionX()+(10*i), ed.getPositionY(), this);
             }
         }
         

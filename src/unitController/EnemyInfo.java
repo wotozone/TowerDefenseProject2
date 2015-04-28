@@ -100,6 +100,7 @@ public class EnemyInfo {
     
     private void getEnemyStartPosition(){
         output.setPosition(MapManager.map.startPath.getPositionX(),MapManager.map.startPath.getPositionY());
+        output.setCurrentPath(MapManager.map.startPath);
     }
     
     private void getEnemyImage(int level){

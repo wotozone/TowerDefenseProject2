@@ -7,6 +7,7 @@ package unitController;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import mainFrame.PathController;
 
 /**
  *
@@ -29,6 +30,13 @@ public class EnemyData {
     private int x;
     private int y;
     
+    private int mx=0;
+    private int my=0;
+    
+    private int moveDelay=0;
+    
+    private PathController currentPath;
+    
     private String enemyName=null;
     
     //public static EnemyData[] enemy = new EnemyData[EnemyController.MAX_ENEMY];
@@ -42,6 +50,18 @@ public class EnemyData {
     
     
     //POSITIONS
+    public void setMoveDelay(boolean reset){
+        if(reset){
+            moveDelay=0;
+        }else{
+            moveDelay++;
+        }
+    }
+    
+    public void setCurrentPath(PathController path){
+        currentPath=path;
+    }
+    
     public void setPosition(int x, int y){
         this.x=x;
         this.y=y;
@@ -198,6 +218,22 @@ public class EnemyData {
     
     public int getPositionY(){
         return y;
+    }
+    
+    public int getMovedPositionX(){
+        return mx;
+    }
+    
+    public int getMovedPositionY(){
+        return my;
+    }
+    
+    public PathController getCurrentPath(){
+        return currentPath;
+    }
+    
+    public int getMoveDelay(){
+        return moveDelay;
     }
     
 }

@@ -15,17 +15,25 @@ public class MapManager{
     
     public static MapManager map = new MapManager();
     
+    public BasicMap basicMap;
+    
     public PathController startPath=null;
     public PathController endPath=null;
     
-    public void setMapType(int type) throws Exception{
-        MapInfo currentMap;
-        switch(type){
-            default:
-                currentMap = new BasicMap();
+    public MapManager(){
+    }
+    
+    public void setMapType(int type){
+        try{
+            switch(type){
+                default:
+                    basicMap = new BasicMap();
+                    startPath=basicMap.getStartPoint();
+                    endPath=basicMap.getEndPoint();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        startPath=currentMap.getStartPoint();
-        endPath=currentMap.getEndPoint();
     }
     
     

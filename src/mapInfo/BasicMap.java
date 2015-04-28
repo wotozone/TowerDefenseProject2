@@ -23,6 +23,10 @@ public class BasicMap extends MapInfo{
     
     public BasicMap() throws Exception{
         super.imageManager = new ImageManager();
+        super.startX=this.startX;
+        super.startY=this.startY;
+        super.endX=this.endX;
+        super.endY=this.endY;
         super.initInfo();
     }
     

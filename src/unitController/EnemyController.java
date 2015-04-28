@@ -5,6 +5,10 @@
  */
 package unitController;
 
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  *
  * @author Tae
@@ -15,15 +19,18 @@ public class EnemyController {
     
     public EnemyInfo info = new EnemyInfo();
     
+    public ArrayList<EnemyData> spawnQueue = new ArrayList<EnemyData>();
+    
     public EnemyData enemyData = null;
     
     public int enemyLevel = 0;//Enemy level starts as 1
-    public int enemyAmount = 0;//How many enemy will be loaded
+    public int enemyAmount = 10;//How many enemy will be loaded
+    
     
     public EnemyController(){
     }
     
-    private void getNextLevelEnemy(){
+    public void getNextLevelEnemy(){
         enemyLevel++;
         enemyData= info.getEnemyData(enemyLevel);
         summonEnemyInField();
@@ -31,7 +38,7 @@ public class EnemyController {
     
     private void summonEnemyInField(){
         for(int i=0;i<enemyAmount;i++){
-            EnemyData.enemy.add(enemyData);
+            spawnQueue.add(enemyData);
         }
     }
     
