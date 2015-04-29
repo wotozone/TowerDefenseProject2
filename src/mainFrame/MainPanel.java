@@ -171,10 +171,11 @@ public class MainPanel extends JFrame implements Runnable{
             }
         }
         if(!EnemyData.enemy.isEmpty()){
-            for(int i=0;i<EnemyData.enemy.size();i++){
+            for(int i=EnemyData.enemy.size()-1;i>=0;i--){
+                System.out.println(i);
                 ed=EnemyData.enemy.get(i);
                 ed.setPosition(ed.getPositionX(), ed.getPositionY());
-                gs.drawImage(ed.getUnitImage(), ed.getPositionX()+(10*i), ed.getPositionY(), this);
+                gs.drawImage(ed.getUnitImage(), ed.getPositionX(), ed.getPositionY(), this);
             }
         }
         

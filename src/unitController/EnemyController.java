@@ -32,13 +32,14 @@ public class EnemyController {
     
     public void getNextLevelEnemy(){
         enemyLevel++;
-        enemyData= info.getEnemyData(enemyLevel);
         summonEnemyInField();
     }
     
     private void summonEnemyInField(){
         for(int i=0;i<enemyAmount;i++){
+            enemyData= info.getEnemyData(enemyLevel);
             spawnQueue.add(enemyData);
+            System.out.println(enemyData.hashCode());
         }
     }
     

@@ -22,7 +22,7 @@ public class EnemyInfo {
     
     public static final int initialAmount = 30;
     
-    private EnemyData output = new EnemyData();
+    private EnemyData output;
     
     public EnemyInfo(){
         initImageManager();
@@ -37,6 +37,7 @@ public class EnemyInfo {
     }
     
     public EnemyData getEnemyData(int level){
+        output=new EnemyData();
         resetOutput();
         getEnemyStat(level);
         getEnemyImage(level);
