@@ -25,6 +25,13 @@ public class ImageLoader{
     //UNITS
     public final BufferedImage ENEMY_DUMMY;
     
+    //TOWERS
+    public final BufferedImage TOWER_DUMMY_PART1;
+    public final BufferedImage TOWER_DUMMY_PART2;
+    
+    //MISSILE
+    public final BufferedImage MISSILE_DUMMY;
+    
     //PATH
     public final BufferedImage PATH_LU;
     public final BufferedImage PATH_LD;
@@ -69,6 +76,13 @@ public class ImageLoader{
         ENEMY_DUMMY= ImageIO.read(new FileInputStream("Resources/DummyEnemy.png"));
         
         //INTERFACES
+        
+        //TOWERS
+        TOWER_DUMMY_PART1= ImageIO.read(new FileInputStream("Resources/DummyTower1.png"));
+        TOWER_DUMMY_PART2= ImageIO.read(new FileInputStream("Resources/DummyTower2.png"));
+        
+        //MISSILES
+        MISSILE_DUMMY= ImageIO.read(new FileInputStream("Resources/DummyMissile.png"));
         
         /*
         */
