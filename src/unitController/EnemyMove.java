@@ -8,7 +8,7 @@ package unitController;
 import java.util.Timer;
 import java.util.TimerTask;
 import mainFrame.MainPanel;
-import mainFrame.PathController;
+import pathController.PathController;
 
 /**
  *

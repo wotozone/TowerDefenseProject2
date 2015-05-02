@@ -7,7 +7,7 @@ package unitController;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import mainFrame.PathController;
+import pathController.PathController;
 
 /**
  *

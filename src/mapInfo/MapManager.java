@@ -5,7 +5,7 @@
  */
 package mapInfo;
 
-import mainFrame.PathController;
+import pathController.PathController;
 
 /**
  *

@@ -7,7 +7,7 @@ package TowerController;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import mainFrame.PathController;
+import pathController.PathController;
 
 /**
  *
@@ -24,18 +24,35 @@ public class TowerData {
     
     public boolean homing = true;//Tower fires homing missile initially.
     
-    public BufferedImage towerBody;
-    public BufferedImage towerHead;
-    public BufferedImage towerMissile;
+    public BufferedImage towerBody=null;
+    public BufferedImage towerHead=null;
+    public BufferedImage towerMissile=null;
     
-    public int towerAngle;//the angle where the tower looks at
-    public int particleX;//its all for dummy
-    public int particleY;
-    public int positionX;
-    public int positionY;
-    public PathController position;
+    public boolean rotatable=false;//set the tower head is rotatable
+    
+    public int towerAngle=0;//the angle where the tower looks at // unable to use atm
+    public int particleX=0;//its all for dummy
+    public int particleY=0;
+    public int positionX=0;
+    public int positionY=0;
+    public PathController position=null;
     
     public static ArrayList<TowerData> tower = new ArrayList<TowerData>();
+    
+    public void initTowerData(int atk, int range, int splash, int atkSpeed, int missileSpeed){
+        setAttackDamage(atk);
+        setAttackRange(range);
+        setAttackSplash(splash);
+        setAttackSpeed(atkSpeed);
+        setMissileSpeed(missileSpeed);
+    }
+    
+    public void initTowerData(int atk, int range, int atkSpeed, int missileSpeed){
+        setAttackDamage(atk);
+        setAttackRange(range);
+        setAttackSpeed(atkSpeed);
+        setMissileSpeed(missileSpeed);
+    }
     
     public void setAttackDamage(int value){
         damage = value;
@@ -57,6 +74,106 @@ public class TowerData {
         missileSpeed=value;
     }
     
+    public void setTowerImage(BufferedImage body, BufferedImage head, BufferedImage missile, boolean rotatable){
+        towerBody=body;
+        towerHead=head;
+        towerMissile=missile;
+        this.rotatable=rotatable;
+    }
     
+    public void setTowerImage(BufferedImage head, BufferedImage missile){
+        towerBody=null;
+        towerHead=head;
+        towerMissile=missile;
+    }
     
+    public void setTowerPosition(PathController path, int missileX, int missileY){
+        position=path;
+        positionX=position.getPositionX();
+        positionY=position.getPositionY();
+        particleX=missileX;
+        particleY=missileY;
+    }
+    
+    public void setTowerPosition(PathController path){
+        position=path;
+        positionX=position.getPositionX();
+        positionY=position.getPositionY();
+        particleX=positionX;
+        particleY=positionY;
+    }
+    
+    public int getAttackDamage(){
+        return damage;
+    }
+    
+    public int getAttackRange(){
+        return range;
+    }
+    
+    public int getAttackSplash(){
+        return splash;
+    }
+    
+    public int getAttackSpeed(){
+        return attackSpeed;
+    }
+    
+    public int getMissileSpeed(){
+        return missileSpeed;
+    }
+    
+    public BufferedImage getTowerHeadImage(){
+        return towerHead;
+    }
+    public BufferedImage getTowerBodyImage(){
+        return towerBody;
+    }
+    public BufferedImage getTowerMissileImage(){
+        return towerMissile;
+    }
+    
+    public PathController getTowerPath(){
+        return position;
+    }
+    
+    public int getTowerPositionX(){
+        return positionX;
+    }
+    
+    public int getTowerPositionY(){
+        return positionY;
+    }
+    
+    public int getTowerMissileX(){
+        return particleX;
+    }
+    
+    public int getTowerMissileY(){
+        return particleY;
+    }
+    
+    public void clearData(){
+        damage=1;
+        range=1;
+        splash=0;//Splash is initially unlocked. Do not set splash value if tower attacks only one target
+        attackSpeed=1000;// attack per 1 sec (ex. 2000=attack per 2sec)
+        missileSpeed=1;//move 100 pixel per sec
+        specialSkill="normal";
+
+        homing = true;//Tower fires homing missile initially.
+
+        towerBody=null;
+        towerHead=null;
+        towerMissile=null;
+
+        rotatable=false;//set the tower head is rotatable
+
+        towerAngle=0;//the angle where the tower looks at // unable to use atm
+        particleX=0;//its all for dummy
+        particleY=0;
+        positionX=0;
+        positionY=0;
+        position=null;
+    }
 }

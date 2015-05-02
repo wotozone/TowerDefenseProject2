@@ -5,6 +5,8 @@
  */
 package mainFrame;
 
+import pathController.PathController;
+import InputController.KeyHandler;
 import imageController.ImageManager;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -154,11 +156,46 @@ public class MainPanel extends JFrame implements Runnable{
         Graphics gs = bi.getGraphics();
         //gs.drawImage(imageManager.getBackgroundImage(), 0, 0, this);
 
-        //Main gamePanel
         gs.setColor(Color.BLACK);
         gs.fillRect(0, 0, 1280, 960);
         gs.setColor(Color.WHITE);
         gs.fillRect(0, 50, 1280, 680);
+        gs.setColor(Color.LIGHT_GRAY);
+        gs.fillRect(0, 730, 480, 230);
+        gs.setColor(Color.RED);
+        gs.fillRect(480, 760, 100, 100);
+        gs.setColor(Color.BLUE);
+        gs.fillRect(480, 860, 100, 100);
+        gs.setColor(Color.GREEN);
+        gs.fillRect(580, 760, 100, 100);
+        gs.setColor(Color.YELLOW);
+        gs.fillRect(580, 860, 100, 100);
+        gs.setColor(Color.RED);
+        gs.fillRect(680, 760, 100, 100);
+        gs.setColor(Color.BLUE);
+        gs.fillRect(680, 860, 100, 100);
+        gs.setColor(Color.GREEN);
+        gs.fillRect(780, 760, 100, 100);
+        gs.setColor(Color.YELLOW);
+        gs.fillRect(780, 860, 100, 100);
+        gs.setColor(Color.RED);
+        gs.fillRect(880, 760, 100, 100);
+        gs.setColor(Color.BLUE);
+        gs.fillRect(880, 860, 100, 100);
+        gs.setColor(Color.GREEN);
+        gs.fillRect(980, 760, 100, 100);
+        gs.setColor(Color.YELLOW);
+        gs.fillRect(980, 860, 100, 100);
+        gs.setColor(Color.RED);
+        gs.fillRect(1080, 760, 100, 100);
+        gs.setColor(Color.BLUE);
+        gs.fillRect(1080, 860, 100, 100);
+        gs.setColor(Color.GREEN);
+        gs.fillRect(1180, 760, 100, 100);
+        gs.setColor(Color.YELLOW);
+        gs.fillRect(1180, 860, 100, 100);
+        
+        //Main gamePanel
         for(int i=0;i<TILE_MAX_X_NUM;i++){
             for(int k=0;k<TILE_MAX_Y_NUM;k++){
                 gs.drawImage(PathController.path[i][k].getTileImage(),

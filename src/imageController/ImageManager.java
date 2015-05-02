@@ -68,7 +68,49 @@ public class ImageManager{
             return imageLoader.ENEMY_DUMMY;
         }
         if(MainPanel.TEST)return imageLoader.ENEMY_DUMMY;
+        return null;
+    }
+    
+    public BufferedImage getTowerImage(String tower){
+        if(tower=="TOWER_DUMMY_PART1"){
+            return imageLoader.TOWER_DUMMY_PART1;
+        }else if(tower=="TOWER_DUMMY_PART2"){
+            return imageLoader.TOWER_DUMMY_PART2;
+        }
         System.out.println("No matched image");
+        return null;
+    }
+    
+    public BufferedImage getTowerImage(int towerID, boolean head){//part 1 is usually body part
+        if(head){
+            if(towerID==0){
+                return imageLoader.TOWER_DUMMY_PART1;
+            }
+            if(MainPanel.TEST)return imageLoader.TOWER_DUMMY_PART1;
+            System.out.println("No matched image");
+        }else{
+            if(towerID==0){
+                return imageLoader.TOWER_DUMMY_PART2;
+            }
+            if(MainPanel.TEST)return imageLoader.TOWER_DUMMY_PART2;
+            System.out.println("No matched image");
+        }
+        return null;
+    }
+    
+    public BufferedImage getMissileImage(String missile){
+        if(missile=="MISSILE_DUMMY"){
+            return imageLoader.MISSILE_DUMMY;
+        }
+        System.out.println("No matched image");
+        return null;
+    }
+    
+    public BufferedImage getMissileImage(int type){
+        if(type==0){
+            return imageLoader.MISSILE_DUMMY;
+        }
+        if(MainPanel.TEST)return imageLoader.MISSILE_DUMMY;
         return null;
     }
     /*

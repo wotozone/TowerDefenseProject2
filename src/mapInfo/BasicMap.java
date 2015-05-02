@@ -8,7 +8,7 @@ package mapInfo;
 import imageController.ImageManager;
 import java.awt.image.BufferedImage;
 import mainFrame.MainPanel;
-import mainFrame.PathController;
+import pathController.PathController;
 
 /**
  *
