@@ -5,16 +5,28 @@
  */
 package TowerController;
 
+import java.util.ArrayList;
+import pathController.PathController;
+
 /**
  *
  * @author Tae
  */
 public class TowerController {
     
+    public static TowerController tc = new TowerController();
+    
+    private TowerData td;
+    
+    
     public TowerController(){
         
     }
     
-    
+    public void createTower(PathController path, int towerType){
+        td=TowerInfo.info.getTowerData(towerType, path);
+        path.setTileType(1);
+        TowerData.tower.add(td);
+    }
     
 }

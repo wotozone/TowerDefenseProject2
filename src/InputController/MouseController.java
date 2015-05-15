@@ -5,6 +5,11 @@
  */
 package InputController;
 
+import GameController.PlayerData;
+import pathController.PathController;
+import pathController.PathFinder;
+import TowerController.*;
+
 /**
  *
  * @author Tae
@@ -41,75 +46,95 @@ public class MouseController {
     }
     
     private void buildTower(){
-        get
+        PathController path = PathFinder.pf.findPath(x, y);
+        if(path.getTileType()==0){
+            if(PlayerData.player.useGold(TowerInfo.info.getTowerPrice(towerID))){
+                TowerController.tc.createTower(path, towerID);
+                System.out.println("TOWER ID: "+towerID);
+            }
+        }else{
+            System.out.println("Unable to build in this Path: "+path.getTileType());
+        }
+        reset();
+    }
+    
+    private void reset(){
+        isBuilding=false;
+        towerID=0;
     }
     
     private int getTowerType(){
-        if(x<480){
-            if(y<860){
+        if(x<515){
+            if(y<545){
                 return 1;
             }else{
                 return 2;
             }
-        }else if(x<580){
-            if(y<860){
+        }else if(x<590){
+            if(y<545){
                 return 3;
             }else{
                 return 4;
             }
-        }else if(x<680){
-            if(y<860){
+        }else if(x<665){
+            if(y<545){
                 return 5;
             }else{
                 return 6;
             }
-        }else if(x<780){
-            if(y<860){
+        }else if(x<740){
+            if(y<545){
                 return 7;
             }else{
                 return 8;
             }
-        }else if(x<880){
-            if(y<860){
+        }else if(x<815){
+            if(y<545){
                 return 9;
             }else{
                 return 10;
             }
-        }else if(x<980){
-            if(y<860){
+        }else if(x<890){
+            if(y<545){
                 return 11;
             }else{
                 return 12;
             }
-        }else if(x<1080){
-            if(y<860){
+        }else if(x<965){
+            if(y<545){
                 return 13;
             }else{
                 return 14;
             }
-        }else if(x<1180){
-            if(y<860){
+        }else if(x<1040){
+            if(y<545){
                 return 15;
             }else{
                 return 16;
             }
         }
+        return 0;
     }
     
     private int getClickedArea(){
         if(y<50){//noti-bar do nothing
+            System.out.println("System: 0");
             return 0;
-        }else if(y<730){//play-area
+        }else if(y<450){//play-area
+            System.out.println("System: 1");
             return 1;
-        }else if(y>760){//info
-            if(x<480){//info area do nothing
+        }else if(y>470){//info
+            if(x<440){//info area do nothing
+                System.out.println("System: 0");
                 return 0;
             }else{//build tower
+                System.out.println("System: 2");
                 return 2;
             }
         }
         //gs.fillRect(0, 50, 1280, 680);//play area
         //gs.fillRect(0, 730, 480, 230);//info area
+        return 0;
     }
     
 }

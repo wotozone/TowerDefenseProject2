@@ -5,8 +5,13 @@
  */
 package mainFrame;
 
+import GameController.PlayerData;
 import pathController.PathController;
 import InputController.KeyHandler;
+import InputController.MouseHandler;
+import TowerController.MissileController;
+import TowerController.MissileData;
+import TowerController.TowerData;
 import imageController.ImageManager;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -19,6 +24,7 @@ import javax.swing.JFrame;
 import mapInfo.*;
 import unitController.EnemyController;
 import unitController.EnemyData;
+import unitController.EnemyInfo;
 import unitController.EnemyMove;
 
 /**
@@ -31,11 +37,12 @@ public class MainPanel extends JFrame implements Runnable{
     public EnemyController ec;
     public FPSChecker fps;
     public EnemyMove em;
+    public MissileController mc;
     //public Object map;
     
     //size of window
-    public static final int WINDOW_WIDTH=1280;
-    public static final int WINDOW_HEIGHT=960;
+    public static final int WINDOW_WIDTH=1040;
+    public static final int WINDOW_HEIGHT=620;
     
     //size of tile
     public static final int TILE_WIDTH=40;
@@ -43,16 +50,19 @@ public class MainPanel extends JFrame implements Runnable{
     public static final int BLOCKSIZE=40;
     
     //# of tiles
-    public static final int TILE_MAX_X_NUM=32;
-    public static final int TILE_MAX_Y_NUM=17;
+    public static final int TILE_MAX_X_NUM=26;
+    public static final int TILE_MAX_Y_NUM=10;
     
     private BufferedImage bi = null;
     private EnemyData ed = null;
+    private TowerData td = null;
+    private MissileData md = null;
+    
+    private EnemyData dummyTarget;
 
     private boolean left = false, right = false, down = false;
     
-    private int moveDelay;
-    private int dropDelay;
+    private int levelDelay=EnemyInfo.levelDelay+1;
     
     public static int mapType=0;//set as Basic Map initially
     
@@ -72,12 +82,13 @@ public class MainPanel extends JFrame implements Runnable{
 
         //this.addKeyListener(this);
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT); 
-        this.setTitle("121321");
+        this.setTitle("TOWER DEFENSE");
         this.setResizable(false);  
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);  
         this.setLocationRelativeTo(null);
         this.addKeyListener(new KeyHandler());
+        this.addMouseListener(new MouseHandler());
 
         start=true;
         end=false;
@@ -87,6 +98,7 @@ public class MainPanel extends JFrame implements Runnable{
         ec = new EnemyController();
         fps = new FPSChecker();
         em = new EnemyMove();
+        mc= new MissileController();
         initTile();
         try {
             imageManager = new ImageManager();
@@ -101,18 +113,27 @@ public class MainPanel extends JFrame implements Runnable{
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
-                if(enemytest){
-                    System.out.println("ssdfsdfasdfasdfasdfasfd");
+                if(levelDelay>EnemyInfo.levelDelay){
+                    System.out.println("Next Level");
                     ec.getNextLevelEnemy();
-                    enemytest=false;
+                    levelDelay=0;
+                    //enemytest=false;
+                }else{
+                    levelDelay++;
+                    System.out.println(levelDelay);
                 }
                 if(!ec.spawnQueue.isEmpty()){
                     System.out.println(ec.spawnQueue.size());
                     EnemyData.enemy.add(ec.spawnQueue.get(0));
                     ec.spawnQueue.remove(0);
                 }
+                if(EnemyData.enemy.isEmpty()){
+                    if(10<(((EnemyInfo.levelDelay-levelDelay)*EnemyInfo.respondDelay)/1000)){
+                        levelDelay=EnemyInfo.levelDelay-(10000/EnemyInfo.respondDelay);
+                    }
+                }
             }
-        }, 0, 500);
+        }, 0, EnemyInfo.respondDelay);
     }
     
     private void initTile(){
@@ -129,18 +150,29 @@ public class MainPanel extends JFrame implements Runnable{
     try {
 
         
-        moveDelay = 0;
-        dropDelay = 0;
 
         while(true) {
 
             Thread.sleep(1);//optimizing fps
 
             if(start) {
-                if(moveDelay>=100){//move per 0.1sec
-                    //keyControl();
-                }else{
-                    moveDelay+=1;
+                for(int i=0;i<TowerData.tower.size();i++){
+                    td = TowerData.tower.get(i);
+                    td.attackTimer++;
+                    if(td.attackTimer>td.attackSpeed){
+                        mc.setTarget(td);
+                        if(td.getPrimaryTarget()!=null){
+                            mc.launchMissile(
+                                                td.getTowerMissileImage(), 
+                                                td.getAttackDamage(), 
+                                                td.getMissileSpeed(), 
+                                                td.getPrimaryTarget(), 
+                                                td.getTowerMissileX(), 
+                                                td.getTowerMissileY()
+                                            );
+                        }
+                        td.attackTimer=0;
+                    }
                 }
             }
             draw();
@@ -156,82 +188,118 @@ public class MainPanel extends JFrame implements Runnable{
         Graphics gs = bi.getGraphics();
         //gs.drawImage(imageManager.getBackgroundImage(), 0, 0, this);
 
-        gs.setColor(Color.BLACK);
-        gs.fillRect(0, 0, 1280, 960);
-        gs.setColor(Color.WHITE);
-        gs.fillRect(0, 50, 1280, 680);
-        gs.setColor(Color.LIGHT_GRAY);
-        gs.fillRect(0, 730, 480, 230);
-        gs.setColor(Color.RED);
-        gs.fillRect(480, 760, 100, 100);
-        gs.setColor(Color.BLUE);
-        gs.fillRect(480, 860, 100, 100);
-        gs.setColor(Color.GREEN);
-        gs.fillRect(580, 760, 100, 100);
-        gs.setColor(Color.YELLOW);
-        gs.fillRect(580, 860, 100, 100);
-        gs.setColor(Color.RED);
-        gs.fillRect(680, 760, 100, 100);
-        gs.setColor(Color.BLUE);
-        gs.fillRect(680, 860, 100, 100);
-        gs.setColor(Color.GREEN);
-        gs.fillRect(780, 760, 100, 100);
-        gs.setColor(Color.YELLOW);
-        gs.fillRect(780, 860, 100, 100);
-        gs.setColor(Color.RED);
-        gs.fillRect(880, 760, 100, 100);
-        gs.setColor(Color.BLUE);
-        gs.fillRect(880, 860, 100, 100);
-        gs.setColor(Color.GREEN);
-        gs.fillRect(980, 760, 100, 100);
-        gs.setColor(Color.YELLOW);
-        gs.fillRect(980, 860, 100, 100);
-        gs.setColor(Color.RED);
-        gs.fillRect(1080, 760, 100, 100);
-        gs.setColor(Color.BLUE);
-        gs.fillRect(1080, 860, 100, 100);
-        gs.setColor(Color.GREEN);
-        gs.fillRect(1180, 760, 100, 100);
-        gs.setColor(Color.YELLOW);
-        gs.fillRect(1180, 860, 100, 100);
-        
-        //Main gamePanel
-        for(int i=0;i<TILE_MAX_X_NUM;i++){
-            for(int k=0;k<TILE_MAX_Y_NUM;k++){
-                gs.drawImage(PathController.path[i][k].getTileImage(),
-                             PathController.path[i][k].getPositionX(),
-                             PathController.path[i][k].getPositionY(), this);
-                if(TEST){
-                    gs.setColor(Color.cyan);
-                    gs.drawRect(BLOCKSIZE*i,10+BLOCKSIZE*(1+k),BLOCKSIZE-1,BLOCKSIZE-1);
-                }
-            }
-        }
-        if(!EnemyData.enemy.isEmpty()){
-            for(int i=EnemyData.enemy.size()-1;i>=0;i--){
-                System.out.println(i);
-                ed=EnemyData.enemy.get(i);
-                ed.setPosition(ed.getPositionX(), ed.getPositionY());
-                gs.drawImage(ed.getUnitImage(), ed.getPositionX(), ed.getPositionY(), this);
-            }
-        }
-        
-        //Set Pathway
-
         
         //When Game has ended
-        if(end){
+        if(PlayerData.player.gameover){
+            if(!end){
+                end=true;
+                start=false;
+                gs.drawImage(imageManager.getGameoverImage(), 140, 170, this);
+                
+            }
+        }else{
+
+            gs.setColor(Color.BLACK);
+            gs.fillRect(0, 0, 1280, 960);
             //gs.setColor(Color.WHITE);
-            //gs.drawString("GAME OVER", 25+(35*4), 75+(35*10));//Show GAME OVER
-            //gs.drawImage(imageManager.getGameOverImage(), 25, 425, this);
+            gs.fillRect(0, 50, 1040, 570);
+            gs.setColor(Color.LIGHT_GRAY);
+            gs.fillRect(0, 450, 440, 170);
+            
+            gs.drawImage(imageManager.getTowerIconImage(1), 440, 470, this);
+            /*
+            gs.setColor(Color.RED);
+            gs.fillRect(480, 760, 100, 100);
+            gs.setColor(Color.BLUE);
+            gs.fillRect(480, 860, 100, 100);
+            gs.setColor(Color.GREEN);
+            gs.fillRect(580, 760, 100, 100);
+            gs.setColor(Color.YELLOW);
+            gs.fillRect(580, 860, 100, 100);
+            gs.setColor(Color.RED);
+            gs.fillRect(680, 760, 100, 100);
+            gs.setColor(Color.BLUE);
+            gs.fillRect(680, 860, 100, 100);
+            gs.setColor(Color.GREEN);
+            gs.fillRect(780, 760, 100, 100);
+            gs.setColor(Color.YELLOW);
+            gs.fillRect(780, 860, 100, 100);
+            gs.setColor(Color.RED);
+            gs.fillRect(880, 760, 100, 100);
+            gs.setColor(Color.BLUE);
+            gs.fillRect(880, 860, 100, 100);
+            gs.setColor(Color.GREEN);
+            gs.fillRect(980, 760, 100, 100);
+            gs.setColor(Color.YELLOW);
+            gs.fillRect(980, 860, 100, 100);
+            gs.setColor(Color.RED);
+            gs.fillRect(1080, 760, 100, 100);
+            gs.setColor(Color.BLUE);
+            gs.fillRect(1080, 860, 100, 100);
+            gs.setColor(Color.GREEN);
+            gs.fillRect(1180, 760, 100, 100);
+            gs.setColor(Color.YELLOW);
+            gs.fillRect(1180, 860, 100, 100);
+            */
+
+            //Main gamePanel
+            for(int i=0;i<TILE_MAX_X_NUM;i++){
+                for(int k=0;k<TILE_MAX_Y_NUM;k++){
+                    gs.drawImage(PathController.path[i][k].getTileImage(),
+                                 PathController.path[i][k].getPositionX(),
+                                 PathController.path[i][k].getPositionY(), this);
+                    if(TEST){
+                        gs.setColor(Color.cyan);
+                        gs.drawRect(BLOCKSIZE*i,10+BLOCKSIZE*(1+k),BLOCKSIZE-1,BLOCKSIZE-1);
+                    }
+                }
+            }
+            if(!EnemyData.enemy.isEmpty()){
+                for(int i=EnemyData.enemy.size()-1;i>=0;i--){
+                    ed=EnemyData.enemy.get(i);
+                    ed.setPosition(ed.getPositionX(), ed.getPositionY());
+                    gs.drawImage(ed.getUnitImage(), ed.getPositionX(), ed.getPositionY(), this);
+                }
+            }
+
+            //Set Pathway
+
+            if(!TowerData.tower.isEmpty()){
+                for(int i=0;i<TowerData.tower.size();i++){
+                    td=TowerData.tower.get(i);
+                    gs.drawImage(td.getTowerHeadImage(),td.getTowerPositionX(), td.getTowerPositionY(), this);
+                }
+            }
+
+            //Set HQ
+            gs.drawImage(imageManager.getCastleImage(),PlayerData.player.castle.getPositionX(), PlayerData.player.castle.getPositionY(), this);
+            
+            //set Missiles
+            if(!MissileData.md.isEmpty()){
+                mc.moveMissile();
+                for(int i=MissileData.md.size()-1;i>=0;i--){
+                    md=MissileData.md.get(i);
+                    gs.drawImage(md.getParticleIamage(),md.getParticleX(),md.getParticleY(), this);
+                }
+            }
+            
+            fps.checkFrame();
+            fps.setFrame();
+            gs.setColor(Color.WHITE);
+            gs.drawString("FPS: "+fps.getFramePerSecond(), 10, 40);//Show Frame Per Second
+            gs.setColor(Color.RED);
+            gs.drawString("LIFE: "+PlayerData.player.life, 300, 40);//Show Frame Per Second
+            gs.setColor(Color.YELLOW);
+            gs.drawString("GOLD: "+PlayerData.player.gold, 600, 40);//Show Frame Per Second
+            gs.setColor(Color.MAGENTA);
+            gs.drawString("NEXT LEVEL: "+((EnemyInfo.levelDelay-levelDelay)*EnemyInfo.respondDelay)/1000+" (sec)", 900, 40);//Show Frame Per Second
         }
+
         
-        fps.checkFrame();
-        fps.setFrame();
-        gs.drawString("FPS: "+fps.getFramePerSecond(), 10, 40);//Show Frame Per Second
+        
         
         Graphics ge = this.getGraphics();
-
+        
         ge.drawImage(bi, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
     }
 /*

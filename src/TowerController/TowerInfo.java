@@ -18,6 +18,10 @@ public class TowerInfo {
     private ImageManager im;
     
     private TowerData output;
+    private boolean seperated=false;
+    
+    private int x;
+    private int y;
     
     public TowerData tempImg=new TowerData();
     
@@ -36,6 +40,7 @@ public class TowerInfo {
     public TowerData getTempTowerImg(int towerID){//DO NOT TOUCH THIS PART. IT IS NOT WORKING
         resetOutput(tempImg);
         getTowerImage(towerID,true);
+        return tempImg;
     }
     
     public TowerData getTowerData(int towerID,PathController path){
@@ -44,23 +49,41 @@ public class TowerInfo {
         getTowerStat(towerID);
         getTowerImage(towerID,false);
         getTowerPosition(path);
+        return output;
     }
     
     private void getTowerImage(int towerID, boolean temp){
         TowerData td=output;
         if(temp)td=tempImg;
-        td.setTowerImage(im.getTowerImage(towerID, false), im.getTowerImage(towerID, true), im.getMissileImage(towerID), false);
+        if(seperated){
+            td.setTowerImage(im.getTowerImage(towerID, false), im.getTowerImage(towerID, true), im.getMissileImage(towerID), false);
+        }else{
+            td.setTowerImage(im.getTowerImage(towerID), im.getMissileImage(towerID));
+        }
     }
     
     private void getTowerStat(int towerID){
         switch(towerID){
             case 1:
-                output.initTowerData(5, 500, 500, 1);
+                output.initTowerData(2, 125, 50, 3, getTowerPrice(1));//(damage,range.atkspeed,missilespeed,price)
+                x=0;
+                y=0;
+                seperated=false;
+                break;
+        }
+    }
+    
+    public int getTowerPrice(int towerID){
+        switch(towerID){
+            case 1:
+                return 100;
+            default:
+                return 10;
         }
     }
     
     private void getTowerPosition(PathController path){
-        output.setTowerPosition(path);
+        output.setTowerPosition(path,x,y);
     }
     
     private void resetOutput(TowerData td){

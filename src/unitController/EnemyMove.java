@@ -5,6 +5,7 @@
  */
 package unitController;
 
+import GameController.PlayerData;
 import java.util.Timer;
 import java.util.TimerTask;
 import mainFrame.MainPanel;
@@ -46,8 +47,15 @@ public class EnemyMove {
                             path=ed.getCurrentPath();
                             dir=path.getPathDir();
                             setNewPosition();
-                            if(x>(40+path.getPositionX())||y>(40+path.getPositionY())){
+                            if(
+                                    ((dir==2||dir==3)&&(x>(40+path.getPositionX())||y>(40+path.getPositionY())))||
+                                    ((dir==1||dir==4)&&(x<(path.getPositionX()-40)||y<(path.getPositionY()-40)))){
                                 ed.setCurrentPath(getNextPathTile());
+                                //When enemy reaches endpoint
+                                if(ed.getCurrentPath()==PlayerData.player.castle){
+                                    EnemyData.enemy.remove(i);
+                                    PlayerData.player.loseLifePoint();
+                                }
                             }
                         }else{
                             ed.setMoveDelay(false);
@@ -68,6 +76,8 @@ public class EnemyMove {
                 return PathController.path[i+1][j];
             case 3://Down
                 return PathController.path[i][j+1];
+            case 4://LEFT
+                return PathController.path[i-1][j];
             default://LEFT
                 return PathController.path[i-1][j];
         }

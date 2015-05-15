@@ -5,6 +5,7 @@
  */
 package unitController;
 
+import GameController.PlayerData;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import pathController.PathController;
@@ -20,24 +21,26 @@ public class EnemyData {
     
     private BufferedImage unitImage=null;
     
-    private int maxHp=0;// Maximum hp of an object; it must has to be declared first.
+    private int maxHp=1;// Maximum hp of an object; it must has to be declared first.
     private int shieldHp=0;//special hp
-    private int currentHp=0;// hp that object currently have
+    private int currentHp=1;// hp that object currently have
     private int unitType=0; // 0=ground, 1=air
-    private int unitGold=0;
-    private int unitSpeed=0;
+    private int unitGold=1;
+    private int unitSpeed=10;
     
-    private int x;
-    private int y;
+    private int x=0;
+    private int y=0;
     
     private int mx=0;
     private int my=0;
     
     private int moveDelay=0;
     
-    private PathController currentPath;
+    private PathController currentPath=null;
     
     private String enemyName=null;
+    
+    private boolean dead=false;
     
     //public static EnemyData[] enemy = new EnemyData[EnemyController.MAX_ENEMY];
     public static ArrayList<EnemyData> enemy = new ArrayList<EnemyData>();
@@ -132,6 +135,9 @@ public class EnemyData {
                 shieldHp-=dmg;
             }
         }else{
+            dead=true;
+            EnemyData.enemy.remove(this);
+            PlayerData.player.gainGold(unitGold);
             //Dead //need method for dying event; might be in a child class
         }
     }
@@ -234,6 +240,10 @@ public class EnemyData {
     
     public int getMoveDelay(){
         return moveDelay;
+    }
+    
+    public boolean isEnemyDead(){
+        return dead;
     }
     
 }

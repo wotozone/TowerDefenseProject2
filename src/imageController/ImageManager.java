@@ -71,6 +71,23 @@ public class ImageManager{
         return null;
     }
     
+    public BufferedImage getCastleImage(){
+        return imageLoader.CASTLE;
+    }
+    
+    public BufferedImage getGameoverImage(){
+        return imageLoader.GAMEOVER;
+    }
+    
+    public BufferedImage getTowerIconImage(int towerID){
+        if(towerID==1){
+            return imageLoader.TOWER1_ICON;
+        }
+        if(MainPanel.TEST)return imageLoader.TOWER1_ICON;
+        System.out.println("No matched image");
+        return null;
+    }
+    
     public BufferedImage getTowerImage(String tower){
         if(tower=="TOWER_DUMMY_PART1"){
             return imageLoader.TOWER_DUMMY_PART1;
@@ -95,6 +112,15 @@ public class ImageManager{
             if(MainPanel.TEST)return imageLoader.TOWER_DUMMY_PART2;
             System.out.println("No matched image");
         }
+        return null;
+    }
+    
+    public BufferedImage getTowerImage(int towerID){//unified
+        if(towerID==1){
+            return imageLoader.TOWER1_HEAD;
+        }
+        if(MainPanel.TEST)return imageLoader.TOWER1_HEAD;
+        System.out.println("No matched image");
         return null;
     }
     

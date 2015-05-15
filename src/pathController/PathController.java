@@ -6,6 +6,7 @@
 package pathController;
 
 import java.awt.image.BufferedImage;
+import mainFrame.MainPanel;
 
 /**
  *
@@ -40,24 +41,31 @@ public class PathController {
     private int positionX=0;
     private int positionY=0;
     
-    public static PathController[][] path = new PathController[32][17];
+    public static PathController[][] path = new PathController[MainPanel.TILE_MAX_X_NUM][MainPanel.TILE_MAX_Y_NUM];
     
     public void setTileType(int type){
         switch(type){
             case 0:
                 setTileEmpty();
+                break;
             case 1:
                 pathStatus=1;
+                break;
             case 2:
                 pathStatus=2;
+                break;
             case 11:
                 setTilePathway(1);
+                break;
             case 12:
                 setTilePathway(2);
+                break;
             case 13:
                 setTilePathway(3);
+                break;
             case 14:
                 setTilePathway(4);
+                break;
         }
     }
     
@@ -76,12 +84,18 @@ public class PathController {
     }
     
     public void setTileImage(BufferedImage bi){
-            System.out.println("sfd");
         pathImage=bi;
     }
     
+    
+    
+    
     public BufferedImage getTileImage(){
         return pathImage;
+    }
+    
+    public int getTileType(){
+        return pathStatus;
     }
     
     public int getPositionX(){

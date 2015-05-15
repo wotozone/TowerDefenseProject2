@@ -8,6 +8,7 @@ package TowerController;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import pathController.PathController;
+import unitController.EnemyData;
 
 /**
  *
@@ -18,9 +19,11 @@ public class TowerData {
     public int damage=1;
     public int range=1;
     public int splash=0;//Splash is initially unlocked. Do not set splash value if tower attacks only one target
-    public int attackSpeed=1000;// attack per 1 sec (ex. 2000=attack per 2sec)
+    public int attackSpeed=100;// attack per 1 sec (ex. 2000=attack per 2sec) <-CHANGED!! attack per (100/100)sec
     public int missileSpeed=1;//move 100 pixel per sec
     public String specialSkill="normal";
+    
+    public EnemyData primaryTarget;
     
     public boolean homing = true;//Tower fires homing missile initially.
     
@@ -37,21 +40,39 @@ public class TowerData {
     public int positionY=0;
     public PathController position=null;
     
+    public int price=10;
+    
+    public int attackTimer=0;
+    
     public static ArrayList<TowerData> tower = new ArrayList<TowerData>();
     
-    public void initTowerData(int atk, int range, int splash, int atkSpeed, int missileSpeed){
+    public void initTowerData(int atk, int range, int splash, int atkSpeed, int missileSpeed,int price){
         setAttackDamage(atk);
         setAttackRange(range);
         setAttackSplash(splash);
         setAttackSpeed(atkSpeed);
         setMissileSpeed(missileSpeed);
+        setPrice(price);
     }
     
-    public void initTowerData(int atk, int range, int atkSpeed, int missileSpeed){
+    public void initTowerData(int atk, int range, int atkSpeed, int missileSpeed,int price){
         setAttackDamage(atk);
         setAttackRange(range);
         setAttackSpeed(atkSpeed);
         setMissileSpeed(missileSpeed);
+        setPrice(price);
+    }
+    
+    public void setPrice(int amount){
+        price = amount;
+    }
+    
+    public void setAttackTimer(){
+        attackTimer++;
+    }
+    
+    public void setAttackTimer(int value){
+        attackTimer=value;
     }
     
     public void setAttackDamage(int value){
@@ -87,7 +108,7 @@ public class TowerData {
         towerMissile=missile;
     }
     
-    public void setTowerPosition(PathController path, int missileX, int missileY){
+    public void setTowerPosition(PathController path, int x, int y, int missileX, int missileY){
         position=path;
         positionX=position.getPositionX();
         positionY=position.getPositionY();
@@ -95,16 +116,27 @@ public class TowerData {
         particleY=missileY;
     }
     
-    public void setTowerPosition(PathController path){
+    public void setTowerPosition(PathController path, int x, int y){
         position=path;
-        positionX=position.getPositionX();
-        positionY=position.getPositionY();
+        positionX=position.getPositionX()+x;
+        positionY=position.getPositionY()+y;
         particleX=positionX;
         particleY=positionY;
     }
     
+    public void setPrimaryTarget(EnemyData enemy){
+        primaryTarget=enemy;
+    }
+    
+    
+    
+    
     public int getAttackDamage(){
         return damage;
+    }
+    
+    public int getPrice(){
+        return price;
     }
     
     public int getAttackRange(){
@@ -153,11 +185,15 @@ public class TowerData {
         return particleY;
     }
     
+    public EnemyData getPrimaryTarget(){
+        return primaryTarget;
+    }
+    
     public void clearData(){
         damage=1;
         range=1;
         splash=0;//Splash is initially unlocked. Do not set splash value if tower attacks only one target
-        attackSpeed=1000;// attack per 1 sec (ex. 2000=attack per 2sec)
+        attackSpeed=100;// attack per 1 sec (ex. 2000=attack per 2sec)
         missileSpeed=1;//move 100 pixel per sec
         specialSkill="normal";
 
@@ -175,5 +211,7 @@ public class TowerData {
         positionX=0;
         positionY=0;
         position=null;
+        
+        price = 10;
     }
 }

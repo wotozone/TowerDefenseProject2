@@ -20,7 +20,9 @@ public class EnemyInfo {
     public static EnemyInfo info = new EnemyInfo();
     private ImageManager im;
     
-    public static final int initialAmount = 30;
+    public static final int initialAmount = 20;
+    public static final int respondDelay = 500;
+    public static final int levelDelay = 100;
     
     private EnemyData output;
     
@@ -48,7 +50,7 @@ public class EnemyInfo {
     private void getEnemyStat(int level){
         switch(level){
             case 1:
-                output.initEnemy(10, 0, 30, 20);//(HP,TYPE,GOLD,SPEED)
+                output.initEnemy(10, 0, 30, 30);//(HP,TYPE,GOLD,SPEED)
                 break;
             case 2:
                 output.initEnemy(30, 0, 50, 30);
@@ -93,7 +95,7 @@ public class EnemyInfo {
         int amount=initialAmount;
         switch(level){
             case 9:
-                amount=20;
+                amount=10;
                 break;
         }
         return amount;

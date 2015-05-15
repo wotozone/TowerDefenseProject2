@@ -28,6 +28,7 @@ public class ImageLoader{
     //TOWERS
     public final BufferedImage TOWER_DUMMY_PART1;
     public final BufferedImage TOWER_DUMMY_PART2;
+    public final BufferedImage TOWER1_HEAD;
     
     //MISSILE
     public final BufferedImage MISSILE_DUMMY;
@@ -48,6 +49,13 @@ public class ImageLoader{
     public final BufferedImage GRASS1;
     public final BufferedImage DOODAD_STONE1_PART1;
     public final BufferedImage DOODAD_STONE1_PART2;
+    
+    //OBJECT
+    public final BufferedImage CASTLE;
+    public final BufferedImage GAMEOVER;
+    
+    //BUTTON ICONS
+    public final BufferedImage TOWER1_ICON;
     
     
     public ImageLoader() throws Exception{
@@ -81,8 +89,20 @@ public class ImageLoader{
         TOWER_DUMMY_PART1= ImageIO.read(new FileInputStream("Resources/DummyTower1.png"));
         TOWER_DUMMY_PART2= ImageIO.read(new FileInputStream("Resources/DummyTower2.png"));
         
+        
+        
+        TOWER1_HEAD= ImageIO.read(new FileInputStream("Resources/DummyTower3.png"));
+        
         //MISSILES
         MISSILE_DUMMY= ImageIO.read(new FileInputStream("Resources/DummyMissile.png"));
+        
+        
+        //OBJECTS
+        CASTLE= ImageIO.read(new FileInputStream("Resources/castle.png"));
+        GAMEOVER= ImageIO.read(new FileInputStream("Resources/gameover.png"));
+        
+        //BUTTON FRAMES
+        TOWER1_ICON= ImageIO.read(new FileInputStream("Resources/tower1_icon2.png"));
         
         /*
         */

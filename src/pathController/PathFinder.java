@@ -19,22 +19,12 @@ public class PathFinder {
     public PathFinder(){
     }
     
-    public static final int WINDOW_WIDTH=1280;
-    public static final int WINDOW_HEIGHT=960;
     
-    //size of tile
-    public static final int TILE_WIDTH=40;
-    public static final int TILE_HEIGHT=40;
-    public static final int BLOCKSIZE=40;
-    
-    //# of tiles
-    public static final int TILE_MAX_X_NUM=32;
-    public static final int TILE_MAX_Y_NUM=17;
-    
-    private PathController findPath(int x, int y){
+    public PathController findPath(int x, int y){
         if(x<0  ||  x>1280  ||  y<10  || y>690)return null;
-        int tileX = x/MainPanel.TILE_WIDTH;
-        int tileY = y/MainPanel.TILE_HEIGHT;
+        int tileX = (x/MainPanel.TILE_WIDTH);
+        int tileY = ((y-50)/(MainPanel.TILE_HEIGHT));
+        System.out.println("Vertial Axis: "+tileY+"//"+y);
         return PathController.path[tileX][tileY];
     }
     

@@ -24,7 +24,6 @@ public class EnemyController {
     public EnemyData enemyData = null;
     
     public int enemyLevel = 0;//Enemy level starts as 1
-    public int enemyAmount = 10;//How many enemy will be loaded
     
     
     public EnemyController(){
@@ -36,10 +35,10 @@ public class EnemyController {
     }
     
     private void summonEnemyInField(){
-        for(int i=0;i<enemyAmount;i++){
+        for(int i=0;i<EnemyInfo.info.getEnemyAmount(enemyLevel);i++){
+            System.out.println(i+" out of "+EnemyInfo.info.getEnemyAmount(enemyLevel));
             enemyData= info.getEnemyData(enemyLevel);
             spawnQueue.add(enemyData);
-            System.out.println(enemyData.hashCode());
         }
     }
     

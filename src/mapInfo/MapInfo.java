@@ -31,7 +31,6 @@ abstract class MapInfo {
         initInfo();
     }
     
-    
     protected void initInfo(){
         startPoint=PathController.path[startX][startY];
         endPoint=PathController.path[endX][endY];
