@@ -42,7 +42,7 @@ public class EnemyMove {
                     for(int i=0;i<EnemyData.enemy.size();i++){
                         ed=EnemyData.enemy.get(i);
                         speed=ed.getUnitSpeed();
-                        if(ed.getMoveDelay()>1000/speed){
+                        if(ed.getMoveDelay()>(1000/speed)){
                             ed.setMoveDelay(true);
                             path=ed.getCurrentPath();
                             dir=path.getPathDir();

@@ -182,7 +182,7 @@ public class EnemyData {
         currentHp=0;
         unitType=0;
         unitGold=0;
-        unitSpeed=0;
+        unitSpeed=10;
         enemyName=null;
     }
     

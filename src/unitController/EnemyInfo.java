@@ -55,6 +55,9 @@ public class EnemyInfo {
             case 2:
                 output.initEnemy(30, 0, 50, 30);
                 break;
+            case 3:
+                output.initEnemy(30, 0, 50, 50);
+                break;
             case 4:
                 output.initEnemy(70, 0, 70, 30);
                 break;
