@@ -48,7 +48,7 @@ public class TowerInfo {
         resetOutput(output);
         getTowerStat(towerID);
         getTowerImage(towerID,false);
-        getTowerPosition(path);
+        getTowerPosition(path,towerID);
         return output;
     }
     
@@ -65,10 +65,21 @@ public class TowerInfo {
     private void getTowerStat(int towerID){
         switch(towerID){
             case 1:
-                output.initTowerData(2, 125, 50, 3, getTowerPrice(1));//(damage,range.atkspeed,missilespeed,price)
+                output.initTowerData(2, 125, 50, 3, getTowerPrice(towerID));//(damage,range.atkspeed,missilespeed,price)
                 x=0;
                 y=0;
                 seperated=false;
+                break;
+            case 2:
+                output.initTowerData(1, 75, 5, 2, getTowerPrice(towerID));
+                x=0;
+                y=0;
+                seperated=false;
+                break;
+            case 3:
+                output.initTowerData(30, 500, 500, 10, getTowerPrice(towerID));
+                x=0;
+                y=0;
                 break;
         }
     }
@@ -77,13 +88,25 @@ public class TowerInfo {
         switch(towerID){
             case 1:
                 return 100;
+            case 2:
+                return 200;
+            case 3:
+                return 40;
             default:
                 return 10;
         }
     }
     
-    private void getTowerPosition(PathController path){
-        output.setTowerPosition(path,x,y);
+    private void getTowerPosition(PathController path,int towerID){
+        switch(towerID){
+            case 3:
+                //if()
+                output.setTowerPosition(path, x, y, x,y-400);
+                break;
+            default:
+                output.setTowerPosition(path,x,y);
+                break;
+        }
     }
     
     private void resetOutput(TowerData td){

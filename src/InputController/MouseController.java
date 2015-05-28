@@ -41,8 +41,8 @@ public class MouseController {
     }
     
     private void selectTower(){
-        isBuilding=true;
         towerID = getTowerType();
+        if(towerID!=0)isBuilding=true;
     }
     
     private void buildTower(){
@@ -74,43 +74,43 @@ public class MouseController {
             if(y<545){
                 return 3;
             }else{
-                return 4;
+                //return 4;
             }
         }else if(x<665){
             if(y<545){
-                return 5;
+                //return 5;
             }else{
-                return 6;
+                //return 6;
             }
         }else if(x<740){
             if(y<545){
-                return 7;
+                //return 7;
             }else{
-                return 8;
+                //return 8;
             }
         }else if(x<815){
             if(y<545){
-                return 9;
+                //return 9;
             }else{
-                return 10;
+                //return 10;
             }
         }else if(x<890){
             if(y<545){
-                return 11;
+                //return 11;
             }else{
-                return 12;
+                //return 12;
             }
         }else if(x<965){
             if(y<545){
-                return 13;
+                //return 13;
             }else{
-                return 14;
+                //return 14;
             }
         }else if(x<1040){
             if(y<545){
-                return 15;
+                //return 15;
             }else{
-                return 16;
+                //return 16;
             }
         }
         return 0;

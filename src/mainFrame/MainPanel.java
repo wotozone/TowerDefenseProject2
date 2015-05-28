@@ -207,6 +207,8 @@ public class MainPanel extends JFrame implements Runnable{
             gs.fillRect(0, 450, 440, 170);
             
             gs.drawImage(imageManager.getTowerIconImage(1), 440, 470, this);
+            gs.drawImage(imageManager.getTowerIconImage(1), 440, 545, this);
+            gs.drawImage(imageManager.getTowerIconImage(1), 515, 470, this);
             /*
             gs.setColor(Color.RED);
             gs.fillRect(480, 760, 100, 100);

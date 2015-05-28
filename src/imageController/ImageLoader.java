@@ -29,6 +29,14 @@ public class ImageLoader{
     public final BufferedImage TOWER_DUMMY_PART1;
     public final BufferedImage TOWER_DUMMY_PART2;
     public final BufferedImage TOWER1_HEAD;
+    public final BufferedImage TOWER_ARCHER_HEAD;
+    public final BufferedImage TOWER_FIRE_HEAD;
+    public final BufferedImage TOWER_GEN1_HEAD;
+    public final BufferedImage TOWER_GEN2_HEAD;
+    public final BufferedImage TOWER_GEN3_HEAD;
+    public final BufferedImage TOWER_ICE_HEAD;
+    public final BufferedImage TOWER_MORTAR_HEAD;
+    public final BufferedImage TOWER_POISON_HEAD;
     
     //MISSILE
     public final BufferedImage MISSILE_DUMMY;
@@ -92,6 +100,14 @@ public class ImageLoader{
         
         
         TOWER1_HEAD= ImageIO.read(new FileInputStream("Resources/DummyTower3.png"));
+        TOWER_ARCHER_HEAD= ImageIO.read(new FileInputStream("Resources/tower-archer.png"));
+        TOWER_FIRE_HEAD= ImageIO.read(new FileInputStream("Resources/tower-fire.png"));
+        TOWER_GEN1_HEAD= ImageIO.read(new FileInputStream("Resources/tower-gen1.png"));
+        TOWER_GEN2_HEAD= ImageIO.read(new FileInputStream("Resources/tower-gen2.png"));
+        TOWER_GEN3_HEAD= ImageIO.read(new FileInputStream("Resources/tower-gen3.png"));
+        TOWER_ICE_HEAD= ImageIO.read(new FileInputStream("Resources/tower-ice.png"));
+        TOWER_MORTAR_HEAD= ImageIO.read(new FileInputStream("Resources/tower-mortar.png"));
+        TOWER_POISON_HEAD= ImageIO.read(new FileInputStream("Resources/tower-poison.png"));
         
         //MISSILES
         MISSILE_DUMMY= ImageIO.read(new FileInputStream("Resources/DummyMissile.png"));

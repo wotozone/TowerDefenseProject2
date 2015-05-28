@@ -116,18 +116,30 @@ public class ImageManager{
     }
     
     public BufferedImage getTowerImage(int towerID){//unified
-        if(towerID==1){
-            return imageLoader.TOWER1_HEAD;
+        switch(towerID){
+            case 1: return imageLoader.TOWER_ARCHER_HEAD;
+            case 2: return imageLoader.TOWER_FIRE_HEAD;
+            case 3: return imageLoader.TOWER_GEN1_HEAD;
+            case 4: return imageLoader.TOWER_GEN2_HEAD;
+            case 5: return imageLoader.TOWER_GEN3_HEAD;
+            case 6: return imageLoader.TOWER_ICE_HEAD;
+            case 7: return imageLoader.TOWER_MORTAR_HEAD;
+            case 8: return imageLoader.TOWER_POISON_HEAD;
+            default: 
+                if(MainPanel.TEST){
+                    return imageLoader.TOWER1_HEAD;
+                }else{
+                    System.out.println("No matched image");
+                    return null;
+                }
         }
-        if(MainPanel.TEST)return imageLoader.TOWER1_HEAD;
-        System.out.println("No matched image");
-        return null;
     }
     
     public BufferedImage getMissileImage(String missile){
         if(missile=="MISSILE_DUMMY"){
             return imageLoader.MISSILE_DUMMY;
         }
+        if(MainPanel.TEST)return imageLoader.MISSILE_DUMMY;
         System.out.println("No matched image");
         return null;
     }
